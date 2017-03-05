@@ -122,19 +122,19 @@
                 <form class="rightform" id="jsStayForm">
                     <div>
                         <img src="{% static 'images/rightform1.png' %}"/>
-                        <input type="text" name="name" id="companyName" placeholder="名字" maxlength="25"/>
+                        <input type="text" name="name" id="name" placeholder="名字" maxlength="25"/>
                     </div>
                     <div>
                         <img src="{% static 'images/rightform2.png' %}"/>
-                        <input type="text" name="mobile" id="companyMobile" placeholder="联系电话"/>
+                        <input type="text" name="mobile" id="mobile" placeholder="联系电话"/>
                     </div>
                     <div>
                         <img src="{% static 'images/rightform3.png' %}"/>
-                        <input type="text" name="course_name" id="companyAddress" placeholder="课程名" maxlength="50"/>
+                        <input type="text" name="course_name" id="course_name" placeholder="课程名" maxlength="50"/>
                     </div>
                     <p class="error company-tips" id="jsCompanyTips"></p>
                     <input class="btn" type="text" id="jsStayBtn" value="立即咨询 >"/>
-                    <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy'/>
+                    {% csrf_token %}
                 </form>
             </div>
 
@@ -155,3 +155,25 @@
         </div>
     </section>
 {% endblock %}
+
+<script>
+    $(function(){
+        $('#jsStayBtn').on('click', function(){
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url:"{% url 'org:add_ask' %}",
+                data:$('#jsStayForm').serialize(),
+                async: true,
+                success: function(data) {
+                    if(data.status == 'success'){
+                        console.log(data);
+                        $('#jsStayForm')[0].reset();
+                        alert("提交成功")
+                    }else if(data.status == 'fail'){
+                        $('#jsCompanyTips').html(data.msg)
+                    }
+                },
+            });
+        });
+    })
