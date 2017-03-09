@@ -49,7 +49,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"章节名")
-    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
+    learn_time = models.IntegerField(default=0, verbose_name=u"学习时长（分钟数）")
 
     class Meta:
         verbose_name = u"章节"
