@@ -1,4 +1,5 @@
 # _*_ encoding: utf-8 _*_
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
@@ -23,6 +24,11 @@ class OrgView(View):
 
         # 城市
         all_citys = CityDict.objects.all()
+
+        # 机构搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_orgs = all_orgs.filter(Q(name__icontains=search_keywords) | Q(desc__icontains=search_keywords))  # i 不区分大小写
 
         # 取出筛选城市
         city_id = request.GET.get('city', "")
@@ -192,6 +198,14 @@ class TeacherListView(View):
     """
     def get(self, request):
         all_teachers = Teacher.objects.all()
+
+        # 讲师搜索
+        search_keywords = request.GET.get('keywords', "")
+        if search_keywords:
+            all_teachers = all_teachers.filter(Q(name__icontains=search_keywords) |
+                                               Q(work_company__icontains=search_keywords) |
+                                               Q(work_position__icontains=search_keywords))  # i 不区分大小写
+
         sort = request.GET.get('sort', "")
         if sort:
             if sort == "hot":
