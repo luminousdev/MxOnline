@@ -24,12 +24,13 @@ from django.views.static import serve
 from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
 from organization.views import OrgView
 from MxOnline.settings import MEDIA_ROOT
+from users.views import IndexView
 
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
 
-    url('^$', TemplateView.as_view(template_name="index.html"), name="index"),
+    url('^$', IndexView.as_view(), name="index"),
     url('^login/$', LoginView.as_view(), name="login"),
     url('^logout/$', LogoutView.as_view(), name="logout"),
     url('^register/$', RegisterView.as_view(), name="register"),
