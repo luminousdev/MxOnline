@@ -21,8 +21,13 @@ class UserProfile(AbstractUser):
         verbose_name = "用户信息"
         verbose_name_plural = verbose_name
 
-        def __unicode__(self):
-            return self.username
+    def __unicode__(self):
+        return self.username
+
+    def unread_nums(self):
+        # 获取用户未读消息的数量
+        from operation.models import UserMessage  # 会和operation中的model成了循环引用
+        return UserMessage.objects.filter(user=self.id, has_read=False).count()
 
 
 class EmailVerifyRecord(models.Model):
