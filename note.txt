@@ -20,3 +20,12 @@ csrf 跨站请求伪造
 4. 虚拟货币转账
 
 font awesome
+
+ueditor 安装
+1. pip install DjangoUeditor
+2. settings.py 中加入 djangoUeditor
+3. url(r'ueditor/', include('DjangoUeditor.urls')
+4. detail = UEditorField()
+xadmin
+1. plugins中添加ueditor.py文件，在__init__中加入ueditor
+2. adminx中添加style_fields = {"detail": "ueditor"}

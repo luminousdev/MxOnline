@@ -109,7 +109,7 @@ class LoginView(View):
 class ForgetPwdView(View):
     def get(self, reguest):
         forget_form = ForgetForm()
-        return render(reguest, "forgetpwd.html", {"forget_form": forget_form})
+        return render(reguest, "forgetpwd.html", {'forget_form': forget_form})
 
     def post(self, request):
         forget_form = ForgetForm(request.POST)
@@ -118,7 +118,7 @@ class ForgetPwdView(View):
             send_register_email(email, "forget")
             return render(request, "send_success.html")
         else:
-            return render(request, "forgetpwd.html", {})
+            return render(request, "forgetpwd.html", {'forget_form': forget_form})
 
 
 class ResetView(View):
