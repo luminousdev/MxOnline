@@ -35,6 +35,7 @@ class Course(models.Model):
     def get_zj_nums(self):
         # 获取课程章节数
         return self.lesson_set.all().count()
+    get_zj_nums.short_description = u"章节数"
 
     def get_learn_users(self):
         return self.usercourse_set.all()[:5]
@@ -43,14 +44,27 @@ class Course(models.Model):
         # 获取课程所有章节
         return self.lesson_set.all()
 
+    def go_to(self):
+        from django.utils.safestring import mark_safe
+        return mark_safe("<a href='http://www.projectsedu.com'>跳转</a>")
+    go_to.short_description = u"跳转"
+
     def __unicode__(self):
         return self.name
+
+
+class BannerCourse(Course):
+    class Meta:
+        verbose_name = u"轮播课程"
+        verbose_name_plural = verbose_name
+        proxy = True
 
 
 class Lesson(models.Model):
     course = models.ForeignKey(Course, verbose_name=u"课程")
     name = models.CharField(max_length=100, verbose_name=u"章节名")
     learn_time = models.IntegerField(default=0, verbose_name=u"学习时长（分钟数）")
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u"添加时间")
 
     class Meta:
         verbose_name = u"章节"
