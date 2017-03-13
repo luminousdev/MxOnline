@@ -21,7 +21,7 @@ import xadmin
 from django.views.generic import TemplateView
 from django.views.static import serve
 
-from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView
+from users.views import LoginView, LogoutView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyPwdView, LoginUnsafeView
 from organization.views import OrgView
 from MxOnline.settings import MEDIA_ROOT, STATIC_ROOT
 from users.views import IndexView
@@ -32,6 +32,7 @@ urlpatterns = [
 
     url('^$', IndexView.as_view(), name="index"),
     url('^login/$', LoginView.as_view(), name="login"),
+    # url('^login/$', LoginUnsafeView.as_view(), name="login"),
     url('^logout/$', LogoutView.as_view(), name="logout"),
     url('^register/$', RegisterView.as_view(), name="register"),
     url(r'^captcha/', include('captcha.urls')),
